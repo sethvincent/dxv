@@ -1,6 +1,6 @@
 # @dxv/cli
 
-A simple wrapper around [eslint](https://eslint.org/), [dprint](https://dprint.dev/), and [typescripts's tsc command](https://www.typescriptlang.org/).
+A simple wrapper around [eslint](https://eslint.org/), [dprint](https://dprint.dev/), and [typescript's tsc command](https://www.typescriptlang.org/).
 
 Please consider sponsoring these projects:
 

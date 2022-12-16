@@ -2,7 +2,6 @@
 
 import mri from 'mri'
 import outdent from 'outdent'
-import * as path from 'path'
 
 import { readPackageJson } from '../lib/utils/read-package-json.js'
 

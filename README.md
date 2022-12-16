@@ -30,9 +30,14 @@ USAGE
 COMMANDS
 	lint     lint files
 	format   format files
-	type		 type check files
-	check    run both type and lint in that order
+	type	 type check files
+	deps	 check versions & missing/unused dependencies
+	check    run type, lint, & deps in that order
 	help     show this help message
+
+dxv deps {command}
+	deps check         check versions & missing/unused dependencies
+	deps update        update dependencies
 
 OPTIONS
 	--cwd, -c          set working directory

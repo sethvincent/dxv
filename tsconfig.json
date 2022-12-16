@@ -1,6 +1,6 @@
 {
 	"include": [
-		"types/types.d.ts",
+		"types/**/*",
 		"bin/index.js",
 		"lib/**/*.js"
 	],

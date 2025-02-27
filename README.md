@@ -70,6 +70,19 @@ dxv type --config .config/tsconfig.json
 dxv deps --config .config/.depcheckrc
 ```
 
+By default `dxv init` creates all the config files in `.config/`. It's nice. Treat yourself.
+
+### npm scripts
+
+Recommended npm scripts:
+
+```
+"fmt": "dxv fmt -c .config/dprint.jsonc",
+"lint": "dxv lint -c .config/eslint.config.js",
+"deps": "dxv deps -c .config/.depcheckrc",
+"type": "dxv type -c .config/tsconfig.json"
+```
+
 ## Types and the types that type real hard
 
 My usage of this tool is focused on writing types in jsdoc/tsdoc comments rather than using typescript itself. Because the tsconfig.json file is fully configurable per-project this shouldn't be a big deal, but there may be decisions at some point that make using type comments easier and using typescript harder. 🤷‍♂️

@@ -16,7 +16,7 @@
         "functionExpression.spaceAfterFunctionKeyword": true,
         "getAccessor.spaceBeforeParentheses": true,
         "method.spaceBeforeParentheses": true,
-        "trailingCommas": "onlyMultiLine"
+        "trailingCommas": "onlyMultiLine",
     },
     "json": {
     },
@@ -34,7 +34,7 @@
     },
     "excludes": [
         "**/node_modules",
-        "**/*-lock.json"
+        "**/*-lock.json",
     ],
     "plugins": [
         "https://plugins.dprint.dev/typescript-0.93.4.wasm",
@@ -44,6 +44,6 @@
         "https://plugins.dprint.dev/ruff-0.3.9.wasm",
         "https://plugins.dprint.dev/g-plane/malva-v0.11.1.wasm",
         "https://plugins.dprint.dev/g-plane/markup_fmt-v0.18.0.wasm",
-        "https://plugins.dprint.dev/g-plane/pretty_yaml-v0.5.0.wasm"
-    ]
+        "https://plugins.dprint.dev/g-plane/pretty_yaml-v0.5.0.wasm",
+    ],
 }

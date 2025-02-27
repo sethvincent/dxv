@@ -4,21 +4,32 @@
 {
     // All JS and declaration files
     "include": [
-        "**/*.js",
-        "**/*.d.ts"
+        "../**/*.js",
+        "../**/*.d.ts"
     ],
 
-    // Skip third-party dependencies
-    "exclude": ["node_modules"],
+    "exclude": [
+        "../node_modules",
+        "../.config/**/*",
+        "../.config/**/*.d.ts",
+        "../**/*.test.js",
+        "../**/*.config.js",
+        "../**/example.js",
+        "../types/**/*.d.ts",
+        "../test/**/*"
+    ],
 
     "compilerOptions": {
-        "rootDir": "../",
-
         // Type definition locations
         "typeRoots": [
-            "types",
-            "node_modules/@types"
+            "../types",
+            "../node_modules/@types"
         ],
+
+        // Generate declaration files
+        "outDir": "../types", // Output directory for declarations
+        "declaration": true, // Output .d.ts files
+        "emitDeclarationOnly": true, // Only output declarations, not JS
 
         // Language settings
         "target": "ESNext", // Latest ECMAScript features
@@ -28,11 +39,6 @@
         // JavaScript handling
         "allowJs": true, // Include JS files
         "checkJs": true, // Type-check JS files
-
-        // Generate declaration files
-        "declaration": true, // Output .d.ts files
-        "emitDeclarationOnly": true, // Only output declarations, not JS
-        "outDir": "types", // Output directory for declarations
 
         // Module compatibility
         "esModuleInterop": true, // Better CommonJS imports

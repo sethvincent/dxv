@@ -1,0 +1,15 @@
+# depcheck
+
+# See more at https://github.com/depcheck/depcheck
+
+# ignore packages with bin entry
+ignoreBinPackage: false
+
+# skip calculation of missing dependencies
+skipMissing: false
+
+# ignore dependencies that matches these globs
+ignoreMatches: []
+
+# patterns matching these globs will be ignored
+ignorePatterns: []

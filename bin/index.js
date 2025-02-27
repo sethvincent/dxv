@@ -2,99 +2,120 @@
 
 import mri from 'mri'
 import outdent from 'outdent'
+import path from 'path'
 
 import { readPackageJson } from '../lib/utils/read-package-json.js'
 
-import { depsCheck, depsUpdate } from '../lib/deps.js'
+import { deps } from '../lib/deps.js'
 import { format } from '../lib/format.js'
+import { init } from '../lib/init.js'
 import { lint } from '../lib/lint.js'
 import { type } from '../lib/type.js'
 
-const flags = /** @type {Flags} */ (mri(process.argv.slice(2), {
-	alias: {
-		help: 'h',
-		cwd: 'c',
-		update: 'u',
-		exclude: 'e'
-	},
-	default: {
-		cwd: process.cwd()
-	}
-}))
+const flags = mri(process.argv.slice(2), {
+    alias: {
+        help: 'h',
+        update: 'u',
+        config: 'c',
+    },
+    default: {
+        cwd: process.cwd(),
+    },
+})
 
 const args = flags._
 const cmd = args.shift()
-const pkg = await readPackageJson({ cwd: flags.cwd })
+let pkg
 
-const context = {
-	pkg,
-	config: pkg?.dxv || {}
+try {
+    pkg = await readPackageJson({ cwd: flags.cwd })
+} catch (error) {
+    if (error.code !== 'ENOTFOUND') {
+        throw error
+    }
+
+    console.error(outdent`
+      Error: package.json not found in ${flags.cwd}
+
+      Initialize your project with \`npm init\` first.
+  `)
+
+    process.exit(1)
 }
 
 if (!cmd || cmd === 'help' || flags.help) {
-	const message = outdent`
-		USAGE
-			dxv {command}
+    const message = outdent`
+      Usage
+      dxv <command>
 
-		COMMANDS
-			lint     lint files
-			format   format files
-			type	 type check files
-			deps	 check versions & missing/unused dependencies
-			check    run type, lint, & deps in that order
-			help     show this help message
+      Commands
+      init     create config files in ./.config by default
+     	lint     lint files with eslint
+     	fmt      format files with dprint
+     	type	   run typescript to check types, emit definitions, etcetera
+     	deps	   check versions & missing/unused dependencies
+     	help     show this help message
 
-		dxv deps {command}
-			deps check         check versions & missing/unused dependencies
-			deps update        update dependencies
+      Options
+      --config, -c       specify config file location
+      --cwd              set working directory (default: process.cwd())
+      --update -c        update outdated dependencies when running \`dxv deps\`
 
-		OPTIONS
-			--cwd, -c          set working directory
-			--exclude, -e      exclude files from linting with lint command
+      Examples
+      dxv help                               # show this help message
+      dxv init                               # create config files in ./.config
+      dxv init .                             # create config files in ./
+      dxv lint -c .config/eslint.config.js   # lint with specific eslint config
+      dxv format -c .config/dprint.json      # format with specific dprint config
+      dxv type -c .config/tsconfig.json      # typecheck with specific tsconfig
+      dxv deps -c .config/.depcheckrc -u     # check deps, update outdated
+```
 
-		HELP
-			dxv help
-`
-
-	console.log(message)
+    console.log(message)
 }
 
-if (cmd === 'lint') {
-	flags.cwd = args[0]
-	await lint({ args, flags, context })
-	process.exit()
-}
+const options = { cwd: flags.cwd, config: flags.config }
 
-if (cmd === 'format') {
-	await format({ args, flags, context })
-	process.exit()
-}
+switch (cmd) {
+    case 'init': {
+        const directory = args[0] || path.join(options.cwd, '.config')
+        await init({ directory, cwd: flags.cwd })
+        break
+    }
 
-if (cmd === 'type') {
-	await type({ args, flags, context })
-	process.exit()
-}
+    case 'lint': {
+        await lint(options)
+        break
+    }
 
-if (cmd === 'check') {
-	await type({ args, flags, context })
-	await lint({ args, flags, context })
-	await depsCheck({ args, flags, context })
-	process.exit()
-}
+    case 'fmt': {
+        await format(options)
+        break
+    }
 
-if (cmd === 'deps') {
-	const subcmd = args.shift()
+    case 'type': {
+        await type(options)
+        break
+    }
 
-	if (subcmd === 'check') {
-		await depsCheck({ args, flags, context })
-		process.exit()
-	}
+    case 'deps': {
+        await deps({
+            ...options,
+            update: flags.update,
+            deps: {
+                dependencies: pkg.dependencies,
+                devDependencies: pkg.devDependencies,
+                peerDependencies: pkg.peerDependencies,
+                optionalDependencies: pkg.optionalDependencies,
+            },
+        })
+        break
+    }
 
-	if (subcmd === 'update') {
-		await depsUpdate({ args, flags, context })
-		process.exit()
-	}
-
-	await depsCheck({ args, flags, context })
-	process.exit()
+    default: {
+        if (cmd) {
+            console.error(`Error: Unknown command "${cmd}"`)
+            process.exit(1)
+        }
+    }
 }

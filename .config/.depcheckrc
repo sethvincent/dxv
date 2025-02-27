@@ -1,0 +1,2 @@
+ignoreMatches: ["eslint-plugin-*", "dprint", "typescript", "type-fest"]
+

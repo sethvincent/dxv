@@ -1,19 +1,18 @@
 # @dxv/cli
 
-A simple wrapper around [eslint](https://eslint.org/), [dprint](https://dprint.dev/), and [typescript's tsc command](https://www.typescriptlang.org/).
+A convenient wrapper around:
 
-Please consider sponsoring these projects:
+- [eslint](https://eslint.org/)
+- [dprint](https://dprint.dev/)
+- [typescript's tsc command](https://www.typescriptlang.org/).
+- [depcheck](https://npmjs.com/depcheck)
+- [npm-check-updates](https://npmjs.com/npm-check-updates)
 
-- [eslint](https://github.com/sponsors/eslint)
-- [dprint](https://github.com/sponsors/dprint)
+## Voltron, Frankenstein's monster, etcetera
 
-## 🚧 Work in progress
+Maintaining JavaScript projects is... a lot. I made `dxv` to make things a little easier.
 
-There may still be inconsistencies between eslint and dprint rules that will be sorted out with time.
-
-In addition, this cli tool does not yet recognize project-specific eslint and dprint config files, though that will be added eventually.
-
-This project may not solve your needs directly, but I think this kind of wrapper is a useful way to have consistency between a team's or individual's projects in a way that allows team-specific and project-specific configuration. The config chosen in this repo might not work for you, so I'm open to exposing all the configuration options available. Pull requests welcome! Or fork it, rename it, and make it your own!
+I'm solving my own problems here, but if this is useful to you that's cool!
 
 ## Install
 
@@ -24,34 +23,54 @@ npm i -D @dxv/cli
 ## Usage
 
 ```
-USAGE
-	dxv {command}
+Usage
+dxv <command>
 
-COMMANDS
-	lint     lint files
-	format   format files
-	type	 type check files
-	deps	 check versions & missing/unused dependencies
-	check    run type, lint, & deps in that order
-	help     show this help message
+Commands
+init     create config files in ./.config by default
+lint     lint files with eslint
+fmt      format files with dprint
+type	   run typescript to check types, emit definitions, etcetera
+deps	   check versions & missing/unused dependencies
+help     show this help message
 
-dxv deps {command}
-	deps check         check versions & missing/unused dependencies
-	deps update        update dependencies
+Options
+--config, -c       specify config file location
+--cwd              set working directory (default: process.cwd())
+--update -c        update outdated dependencies when running `dxv deps`
 
-OPTIONS
-	--cwd, -c          set working directory
-	--exclude, -e      exclude files from linting with lint command
-
-HELP
-	dxv help
+Examples
+dxv help                               # show this help message
+dxv init                               # create config files in ./.config
+dxv init .                             # create config files in ./
+dxv lint -c .config/eslint.config.js   # lint with specific eslint config
+dxv format -c .config/dprint.json      # format with specific dprint config
+dxv type -c .config/tsconfig.json      # typecheck with specific tsconfig
+dxv deps -c .config/.depcheckrc -u     # check deps, update outdated
 ```
 
-### Type checking
+## Configuration
 
-The type checking functionality is somewhat limited. For now it reads a tsconfig.json file in the current working directory. This can be overwritten with a `--cwd desired/path` flag.
+We directly use the config files from each project:
 
-Create a tsconfig.json file before running the `dxv type` or `dxv check` commands, for example using `tsc --init`.
+- [dprint](https://dprint.dev/config/)
+- [ESLint](https://eslint.org/docs/latest/use/configure/configuration-files)
+- [TypeScript](https://www.typescriptlang.org/tsconfig)
+- [depcheck](https://github.com/depcheck/depcheck)
+- [npm-check-updates](https://github.com/raineorshine/npm-check-updates)
+
+### Use a `.config/` directory
+
+Keep all those annoying little dotfiles out of the way. Specify the location of config files:
+
+```
+dxv lint --config .config/eslint.config.js
+dxv fmt  --config .config/dprint.json
+dxv type --config .config/tsconfig.json
+dxv deps --config .config/.depcheckrc
+```
+
+## Types and the types that type real hard
 
 My usage of this tool is focused on writing types in jsdoc/tsdoc comments rather than using typescript itself. Because the tsconfig.json file is fully configurable per-project this shouldn't be a big deal, but there may be decisions at some point that make using type comments easier and using typescript harder. 🤷‍♂️
 

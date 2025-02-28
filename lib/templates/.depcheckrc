@@ -9,7 +9,8 @@ ignoreBinPackage: false
 skipMissing: false
 
 # ignore dependencies that matches these globs
-ignoreMatches: []
+# @eslint/js and globals are dependencies of dxv so they are ignored
+ignoreMatches: ["@eslint/js", "globals"]
 
 # patterns matching these globs will be ignored
 ignorePatterns: []

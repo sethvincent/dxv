@@ -1,6 +1,6 @@
 {
   "name": "@dxv/cli",
-  "version": "2.0.4",
+  "version": "3.0.0",
   "description": "A convenient command-line tool that wraps eslint, dprint, tsc, depcheck, and npm-check-updates",
   "main": "index.js",
   "type": "module",

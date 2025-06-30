@@ -6,7 +6,7 @@
 module.exports = {
   // Exclude packages matching the given string, wildcard, glob,
   // comma-or-space-delimited list, /regex/, or predicate function.
-  reject: ["@types/*", "dprint", "eslint-*", "type-fest"],
+  reject: [],
 
   // Exclude package.json versions using comma-or-space-delimited list, /regex/, or predicate function.
   rejectVersion: () => {},

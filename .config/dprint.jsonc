@@ -2,7 +2,7 @@
 // https://dprint.dev/config/
 
 {
-    "indentWidth": 4,
+    "indentWidth": 2,
     "useTabs": false,
     "typescript": {
         "quoteStyle": "alwaysSingle",

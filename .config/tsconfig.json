@@ -4,54 +4,60 @@
 {
     // All JS and declaration files
     "include": [
-        "**/*.js",
-        "**/*.d.ts",
+        "../**/*.js"
     ],
 
-    // Skip third-party dependencies
-    "exclude": ["node_modules"],
+    "exclude": [
+      "../types",
+      "../node_modules",
+      "../dist",
+      "../tmp",
+      "../build"
+    ],
 
     "compilerOptions": {
-        "rootDir": "../",
-
         // Type definition locations
         "typeRoots": [
-            "types",
-            "node_modules/@types"
+            // "../types",
+            "../node_modules/@types"
         ],
 
+        // Generate declaration files
+        "outDir": "../types", // Output directory for declarations
+        "declaration": true, // Output .d.ts files
+        "emitDeclarationOnly": true, // Only output declarations, not JS
+
         // Language settings
-        "target": "ESNext",          // Latest ECMAScript features
-        "module": "ES2022",          // ES modules
-        "moduleResolution": "node",  // Node.js resolution
+        "target": "ESNext", // Latest ECMAScript features
+        "module": "ES2022", // ES modules
+        "moduleResolution": "node", // Node.js resolution
 
         // JavaScript handling
-        "allowJs": true,             // Include JS files
-        "checkJs": true,             // Type-check JS files
-        "noEmit": true,              // Check types only
+        "allowJs": true, // Include JS files
+        "checkJs": true, // Type-check JS files
 
         // Module compatibility
-        "esModuleInterop": true,             // Better CommonJS imports
+        "esModuleInterop": true, // Better CommonJS imports
         "forceConsistentCasingInFileNames": true, // Consistent file casing
 
         // Strictness (balanced for your pleasure)
-        "strict": false,                     // Disable strict mode default
-        "noImplicitAny": true,               // Require basic types
-        "strictNullChecks": false,           // More flexible null handling
-        "strictFunctionTypes": true,         // Type-safe function params
-        "strictBindCallApply": true,         // Type-safe function methods
+        "strict": false, // Disable strict mode default
+        "noImplicitAny": false, // Require basic types
+        "strictNullChecks": false, // More flexible null handling
+        "strictFunctionTypes": true, // Type-safe function params
+        "strictBindCallApply": true, // Type-safe function methods
         "strictPropertyInitialization": false, // Flexible property init
 
-        // Error reduction (we're here to hack, not whack-a-type
-        "suppressImplicitAnyIndexErrors": false,    // Allow indexing
-        "useUnknownInCatchVariables": false,        // Simpler error handling
+        // Error reduction (we're here to hack, not play whack-a-type
+        "suppressImplicitAnyIndexErrors": false, // Allow indexing
+        "useUnknownInCatchVariables": false, // Simpler error handling
         "noPropertyAccessFromIndexSignature": false, // Allow string indexing
-        "noImplicitThis": false,                    // Flexible this
-        "alwaysStrict": false,                      // No "use strict"
-        "noUnusedParameters": false,                // Allow unused params
+        "noImplicitThis": false, // Flexible this
+        "alwaysStrict": false, // No "use strict"
+        "noUnusedParameters": false, // Allow unused params
 
         // Performance
-        "skipLibCheck": true,      // Faster compilation
-        "isolatedModules": true,   // Independent module transpilation
+        "skipLibCheck": true, // Faster compilation
+        "isolatedModules": true // Independent module transpilation
     }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@dxv/cli",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "A convenient command-line tool that wraps oxlint, dprint, tsc, and lightweight dependency audits",
   "main": "index.js",
   "type": "module",

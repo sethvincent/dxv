@@ -2,7 +2,7 @@
 
 import os from 'bare-os'
 import path from 'bare-path'
-import { dedent as indent } from 'indentation'
+import { dedent } from 'indentation'
 import mri from 'mri'
 
 import { readPackageJson } from '../lib/utils/read-package-json.js'
@@ -38,7 +38,7 @@ try {
     throw error
   }
 
-  console.error(indent`
+  console.error(dedent`
       Error: package.json not found in ${flags.cwd}
 
       Initialize your project with \`npm init\` first.
@@ -48,7 +48,7 @@ try {
 }
 
 if (!cmd || cmd === 'help' || flags.help) {
-  const message = indent`
+  const message = dedent`
       Usage
       dxv <command>
 
@@ -73,7 +73,7 @@ if (!cmd || cmd === 'help' || flags.help) {
       dxv format -c .config/dprint.json      # format with specific dprint config
       dxv type -c .config/tsconfig.json      # typecheck with specific tsconfig
       dxv deps -c .config/dependencies.json -u     # audit dependencies, optionally update
-```
+`
 
   console.log(message)
 }

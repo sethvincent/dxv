@@ -1,0 +1,16 @@
+{
+  "ignoreMatches": [
+    "@types/*",
+    "@dxv/cli"
+  ],
+  "skipMissing": false,
+  "skipUnused": false,
+  "skipOutdated": false,
+  "projectDirectories": [
+    "bin",
+    "lib",
+    "types",
+    "test",
+    "tests"
+  ]
+}

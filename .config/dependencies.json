@@ -1,0 +1,19 @@
+{
+  "ignoreMatches": [
+    "oxlint",
+    "cmake-*",
+    "@types/*",
+    "dprint",
+    "oxlint-tsgolint"
+  ],
+  "skipMissing": false,
+  "skipUnused": false,
+  "skipOutdated": false,
+  "projectDirectories": [
+    "bin",
+    "lib",
+    "types",
+    "test",
+    "tests"
+  ]
+}

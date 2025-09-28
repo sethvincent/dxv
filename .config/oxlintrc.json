@@ -1,0 +1,15 @@
+{
+  "$schema": "https://oxc-project.github.io/oxlint/config-schema.json",
+  "extends": ["oxlint:recommended"],
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "no-unused-vars": "off"
+  },
+  "ignorePatterns": [
+    "types/**",
+    "sandbox/**"
+  ]
+}

@@ -2,11 +2,10 @@
 
 A convenient wrapper around:
 
-- [eslint](https://eslint.org/)
+- [oxlint](https://oxc-project.github.io/docs/guide/oxlint/intro)
 - [dprint](https://dprint.dev/)
 - [typescript's tsc command](https://www.typescriptlang.org/).
-- [depcheck](https://npmjs.com/depcheck)
-- [npm-check-updates](https://npmjs.com/npm-check-updates)
+- Dependency checks (missing, unused, and outdated packages)
 
 ## Voltron, Frankenstein's monster, etcetera
 
@@ -17,8 +16,11 @@ I'm solving my own problems here, but if this is useful to you that's cool!
 ## Install
 
 ```shell
+npm install -g bare
 npm i -D @dxv/cli
 ```
+
+The CLI executes under the [Bare](https://github.com/holepunchto/bare) runtime. Ensure the `bare` binary is available on your PATH before running any `dxv` commands.
 
 ## Usage
 
@@ -28,25 +30,25 @@ dxv <command>
 
 Commands
 init     create config files in ./.config by default
-lint     lint files with eslint
+lint     lint files with oxlint
 fmt      format files with dprint
 type	   run typescript to check types, emit definitions, etcetera
-deps	   check versions & missing/unused dependencies
+deps	   audit dependencies for missing/unused/outdated packages
 help     show this help message
 
 Options
 --config, -c       specify config file location
---cwd              set working directory (default: process.cwd())
+--cwd              set working directory (default: os.cwd())
 --update -c        update outdated dependencies when running `dxv deps`
 
 Examples
-dxv help                               # show this help message
-dxv init                               # create config files in ./.config
-dxv init .                             # create config files in ./
-dxv lint -c .config/eslint.config.js   # lint with specific eslint config
-dxv format -c .config/dprint.json      # format with specific dprint config
-dxv type -c .config/tsconfig.json      # typecheck with specific tsconfig
-dxv deps -c .config/.depcheckrc -u     # check deps, update outdated
+dxv help                  # show this help message
+dxv init                  # create config files in ./.config
+dxv init .                # create config files in ./
+dxv lint                  # lint with specific oxlint config
+dxv format                # format with specific dprint config
+dxv type                  # typecheck with specific tsconfig
+dxv deps --update         # check dependencies and update
 ```
 
 ## Configuration
@@ -54,23 +56,30 @@ dxv deps -c .config/.depcheckrc -u     # check deps, update outdated
 We directly use the config files from each project:
 
 - [dprint](https://dprint.dev/config/)
-- [ESLint](https://eslint.org/docs/latest/use/configure/configuration-files)
+- [Oxlint](https://oxc-project.github.io/docs/guide/oxlint/intro)
 - [TypeScript](https://www.typescriptlang.org/tsconfig)
-- [depcheck](https://github.com/depcheck/depcheck)
-- [npm-check-updates](https://github.com/raineorshine/npm-check-updates)
+- `npm outdated` via a lightweight wrapper
+- `package-lock.json` metadata (if present) to distinguish direct vs transitive installs during `dxv deps`
 
 ### Use a `.config/` directory
 
-Keep all those annoying little dotfiles out of the way. Specify the location of config files:
+By default dexv puts all those annoying little dotfiles out of the way in a `./.config` directory.
+
+You can specify an alternate location of config files:
 
 ```
-dxv lint --config .config/eslint.config.js
-dxv fmt  --config .config/dprint.json
-dxv type --config .config/tsconfig.json
-dxv deps --config .config/.depcheckrc
+dxv init .somewhere
+dxv lint --config .somewhere/oxlintrc.json
+dxv fmt  --config .somewhere/dprint.json
+dxv type --config .somewhere/tsconfig.json
+dxv deps --config .somewhere/dependencies.json
 ```
 
-By default `dxv init` creates all the config files in `.config/`. It's nice. Treat yourself.
+By default `dxv init` creates all the config files in `.config/`.
+
+If you have other config files that could live in there, go for it. Keep things tidy. It's nice. Treat yourself.
+
+Dependency checks read config from `.config/dependencies.json`, a JSON file that controls ignore lists and whether missing/unused/outdated checks run. It also supports a `projectDirectories` array when you need dxv to scan additional source roots (e.g. tests).
 
 ### npm scripts
 
@@ -78,10 +87,18 @@ Recommended npm scripts:
 
 ```
 "fmt": "dxv fmt -c .config/dprint.jsonc",
-"lint": "dxv lint -c .config/eslint.config.js",
-"deps": "dxv deps -c .config/.depcheckrc",
+"lint": "dxv lint -c .config/oxlintrc.json",
+"deps": "dxv deps -c .config/dependencies.json",
 "type": "dxv type -c .config/tsconfig.json"
 ```
+
+### Maintainer scripts
+
+```
+npm run integration   # copy the tmp fixture into a scratch workspace and run fmt/lint/type/deps
+```
+
+The fixture intentionally lacks installed dependencies, so missing/unused warnings in this run are expected—it’s a smoke test that dxv reports issues rather than a failure.
 
 ## Types and the types that type real hard
 

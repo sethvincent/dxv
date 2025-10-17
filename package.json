@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/sethvincent/dxv#readme",
   "dependencies": {
+    "bare-env": "^3.0.0",
     "bare-fs": "^4.4.5",
     "bare-os": "^3.6.2",
     "bare-path": "^3.0.0",

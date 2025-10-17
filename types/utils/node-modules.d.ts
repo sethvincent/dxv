@@ -3,4 +3,4 @@
  * @param {string[]} pathnames
  * @returns {Promise<string[]>} pathnames to the node_modules directories.
  */
-export function findNodeModules(pathnames: string[]): Promise<string[]>;
+export function findNodeModules (pathnames: string[]): Promise<string[]>

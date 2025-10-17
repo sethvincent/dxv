@@ -6,14 +6,14 @@
  * @param {{ dependencies: {}, devDependencies: {}, peerDependencies: {}, optionalDependencies: {}}} options.deps - dependencies from package.json
  * @returns {Promise<void>}
  */
-export function deps(options: {
-    cwd: string;
-    config: string;
-    update: boolean;
-    deps: {
-        dependencies: {};
-        devDependencies: {};
-        peerDependencies: {};
-        optionalDependencies: {};
-    };
-}): Promise<void>;
+export function deps (options: {
+  cwd: string
+  config: string
+  update: boolean
+  deps: {
+    dependencies: {}
+    devDependencies: {}
+    peerDependencies: {}
+    optionalDependencies: {}
+  }
+}): Promise<void>

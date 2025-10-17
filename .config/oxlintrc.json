@@ -6,7 +6,8 @@
     "node": true
   },
   "rules": {
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "no-base-to-string": "off"
   },
   "ignorePatterns": [
     "types/**",

@@ -6,9 +6,9 @@
  * @param {string} options.cwd
  * @returns {Promise<PackageJson>} packageJson
  */
-export function readPackageJson({ cwd }: {
-    cwd: string;
-}): Promise<PackageJson>;
+export function readPackageJson ({ cwd }: {
+  cwd: string
+}): Promise<PackageJson>
 export type PackageJson = {
-    [key: string]: any;
-};
+  [key: string]: any
+}

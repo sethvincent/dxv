@@ -1,1 +1,1 @@
-export const dxvDirectory: any;
+export const dxvDirectory: any

@@ -30,7 +30,7 @@
     "bare-path": "^3.0.0",
     "bare-subprocess": "^5.1.4",
     "dprint": "^0.50.2",
-    "indentation": "^1.0.1",
+    "indentation": "^2.0.0",
     "mri": "^1.2.0",
     "oxlint": "^1.18.0",
     "oxlint-tsgolint": "^0.2.0",

@@ -1,0 +1,9 @@
+/**
+ * @param {Object} [options]
+ * @param {String} [options.cwd]
+ * @param {String} [options.config]
+ */
+export function format(options?: {
+    cwd?: string;
+    config?: string;
+}): Promise<void>;

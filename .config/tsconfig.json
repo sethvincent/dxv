@@ -3,7 +3,7 @@
     "../**/*.js"
   ],
   "exclude": [
-    "../bin",
+    "../bin/*",
     "../types",
     "../node_modules",
     "../dist",
@@ -12,7 +12,8 @@
     "../sandbox",
     "../sandbox/**/*",
     "../scripts",
-    "../scripts/**/*"
+    "../scripts/**/*",
+    "../test/**/*"
   ],
   "compilerOptions": {
     "outDir": "../types",
